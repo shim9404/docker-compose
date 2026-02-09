@@ -1,0 +1,44 @@
+server:
+  port: 8000
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+logging:
+  pattern:
+    console: "${LOGPATTERN_CONSOLE:%green(%d{HH:mm:ss.SSS}) %blue(%-5level) %red([%thread]) %yellow(%logger{15}:%line)-%msg%n}"
+  level:
+    org.springframework.security: ${SPRING_SECURITY_LOG_LEVEL:TRACE}
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  datasource:
+    url: jdbc:mysql://localhost:3306/kiwidb?serverTimezone=Asia/Seoul
+    username: root
+    password: 12345678
+#    url: jdbc:mysql://my-db:3306/kiwidb?serverTimezone=Asia/Seoul
+#    username: kiwi
+#    password: kiwi
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-timeout: 20000
+      validation-timeout: 3000
+      minimum-idle: 5
+      maximum-pool-size: 12
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      auto-commit: true
+      pool-name: myPool
+  jpa:
+    hibernate:
+      ddl-auto: update #create update none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+jwt:
+  secret: c3ByaW5nYm9vdGF1dGhhY2Nlc3N0b2tlbmhlbGxvd29ybGRzcHJpbmdib290YXV0aGFjY2Vzc3Rva2VuaGVsbG93b3JsZA==
+  expiration: 20 #분 단위

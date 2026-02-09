@@ -1,0 +1,16 @@
+FROM node:22-alpine
+
+WORKDIR /app
+
+# 의존성 먼저 설치(캐시 활용)
+COPY package*.json ./
+RUN npm ci
+
+# 소스 복사
+COPY . .
+
+# Vite 기본 포트 5173
+EXPOSE 5173
+
+# 컨테이너 밖에서 접속 가능하게 --host 0.0.0.0
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5173"]

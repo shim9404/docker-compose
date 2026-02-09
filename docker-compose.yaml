@@ -1,0 +1,48 @@
+services:
+  my-db:
+    image: mysql
+    container_name: my-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_DATABASE: kiwidb
+      MYSQL_USER: kiwi
+      MYSQL_PASSWORD: kiwi
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping" ]
+      interval: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    container_name: my-backend
+    depends_on:
+      my-db:
+        condition: service_healthy
+    environment:
+      # application.yml 대신 환경변수로도 가능(원하면 이 방식으로 통일 가능)
+      SPRING_DATASOURCE_URL: jdbc:mysql://my-db:3306/kiwidb
+      SPRING_DATASOURCE_USERNAME: kiwi
+      SPRING_DATASOURCE_PASSWORD: kiwi
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: my-frontend
+    depends_on:
+      - backend
+    ports:
+      - "5173:5173"
+    # (선택) 소스 수정 즉시 반영하려면 볼륨 마운트
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+volumes:
+  mysql_data:
