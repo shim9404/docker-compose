@@ -42,8 +42,10 @@ const Header = () => {
             <Nav className="me-auto">
               <Link to="/home" className="nav-link">Home</Link>
               {['ROLE_USER', 'ROLE_MANAGER' ,'ROLE_ADMIN'].includes(memberData.role) && (
-
-                <Link to="/board" className="nav-link">게시판</Link>
+                <>
+                  <Link to="/notice" className="nav-link">공지사항</Link>
+                  <Link to="/board" className="nav-link">게시판</Link>
+                </>
               )}
               {isLoggedIn && memberData.role==="ROLE_USER" && (<Link to="/mypage" className="nav-link">마이페이지</Link>)}
               {isLoggedIn && memberData.role==="ROLE_ADMIN" && (<Link to="/admin" className="nav-link">관리자페이지</Link>)}

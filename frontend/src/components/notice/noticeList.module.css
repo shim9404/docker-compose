@@ -1,0 +1,19 @@
+/* Header와 공지사항 글목록 사이 간격 20px */
+.noticeListWrap {
+  margin-top: 30px;
+}
+
+/* 전체조회·글쓰기 버튼을 화면 오른쪽에 배치 */
+.listFooter {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.buttonFooter {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.1rem;
+}
